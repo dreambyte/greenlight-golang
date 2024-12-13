@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15.4-alpine
+    container_name: postgresdb
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_satellity:/var/lib/postgresql/data
+      - ./internal/models/schema.sql:/docker-entrypoint-initdb.d/create_tables.sql # remove folder data if start new container
+volumes:
+  postgres_satellity:
